@@ -207,7 +207,7 @@ Demonstrar domínio prático em:
 
 **Emily da Silva Lessa**
 
-Projeto desenvolvido para fins acadêmicos na disciplina de DevOps e Arquitetura Cloud-Native.
+Projeto desenvolvido para fins acadêmicos na disciplina de Cloud DevOps: Orchestrating Containers and Micro Services.
 
 ---
 
