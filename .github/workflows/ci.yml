@@ -1,0 +1,34 @@
+
+name: CI - Loja Veloz
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Login no Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build e push da imagem Gateway
+      uses: docker/build-push-action@v5
+      with:
+        context: ./services/gateway
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/loja-veloz-gateway:latest

@@ -1,0 +1,48 @@
+
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: lojaveloz
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  pedidos:
+    build: ./services/pedidos
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  pagamentos:
+    build: ./services/pagamentos
+    networks:
+      - backend
+
+  estoque:
+    build: ./services/estoque
+    networks:
+      - backend
+
+  gateway:
+    build: ./services/gateway
+    ports:
+      - "8080:3000"
+    depends_on:
+      - pedidos
+      - pagamentos
+      - estoque
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:
